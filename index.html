@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coming Soon</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: white;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .container {
+        animation: fadeIn 1.5s ease-in-out;
+    }
+
+    h1 {
+        font-size: 3rem;
+        letter-spacing: 2px;
+    }
+
+    p {
+        margin-top: 15px;
+        font-size: 1.2rem;
+        opacity: 0.8;
+    }
+
+    .loader {
+        margin: 30px auto;
+        width: 60px;
+        height: 60px;
+        border: 6px solid rgba(255,255,255,0.2);
+        border-top: 6px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+        font-size: 0.9rem;
+        opacity: 0.6;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🚧 Website Under Construction</h1>
+    <p>We're working hard to launch something amazing.<br>Stay tuned!</p>
+    <div class="loader"></div>
+</div>
+
+<div class="footer">
+    © 2026 YourBrand. All Rights Reserved.
+</div>
+
+</body>
+</html>
