@@ -4,80 +4,502 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Coming Soon</title>
+
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Segoe UI', sans-serif;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
 
-    body {
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-        color: white;
-        text-align: center;
-        overflow: hidden;
-    }
+body{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  color:white;
+  text-align:center;
+  overflow:hidden;
+}
 
-    .container {
-        animation: fadeIn 1.5s ease-in-out;
-    }
+.container{
+  animation:fadeIn 1.5s ease-in-out;
+}
 
-    h1 {
-        font-size: 3rem;
-        letter-spacing: 2px;
-    }
+h1{
+  font-size:3rem;
+  letter-spacing:2px;
+}
 
-    p {
-        margin-top: 15px;
-        font-size: 1.2rem;
-        opacity: 0.8;
-    }
+p{
+  margin-top:15px;
+  font-size:1.2rem;
+  opacity:.8;
+}
 
-    .loader {
-        margin: 30px auto;
-        width: 60px;
-        height: 60px;
-        border: 6px solid rgba(255,255,255,0.2);
-        border-top: 6px solid white;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-    }
+.loader{
+  margin:30px auto;
+  width:60px;
+  height:60px;
+  border:6px solid rgba(255,255,255,.2);
+  border-top:6px solid white;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
 
-    @keyframes spin {
-        100% { transform: rotate(360deg); }
-    }
+.play-btn{
+  position:fixed;
+  right:28px;
+  bottom:76px;
+  padding:13px 22px;
+  border:none;
+  border-radius:999px;
+  background:#facc15;
+  color:#1f2937;
+  font-weight:800;
+  font-size:15px;
+  cursor:pointer;
+  box-shadow:0 12px 30px rgba(0,0,0,.25);
+  z-index:50;
+}
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+.footer{
+  position:absolute;
+  bottom:20px;
+  width:100%;
+  font-size:.9rem;
+  opacity:.6;
+}
 
-    .footer {
-        position: absolute;
-        bottom: 20px;
-        width: 100%;
-        font-size: 0.9rem;
-        opacity: 0.6;
-    }
+.game-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(2,6,23,.86);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:100;
+  padding:18px;
+}
+
+.game-wrap{
+  width:min(94vw,900px);
+  height:min(82vh,560px);
+  background:#111827;
+  border:1px solid #334155;
+  border-radius:20px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 24px 70px rgba(0,0,0,.45);
+}
+
+.close-btn{
+  position:absolute;
+  top:12px;
+  right:14px;
+  z-index:80;
+  width:34px;
+  height:34px;
+  border:none;
+  border-radius:50%;
+  background:#facc15;
+  color:#111827;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.game-top{
+  height:66px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 22px;
+  background:#0b1220;
+  border-bottom:1px solid #263244;
+}
+
+.game-title{
+  font-size:21px;
+  font-weight:800;
+}
+
+.stats{
+  display:flex;
+  gap:10px;
+}
+
+.badge{
+  min-width:76px;
+  padding:7px 10px;
+  border-radius:11px;
+  background:#162033;
+  border:1px solid rgba(148,163,184,.18);
+}
+
+.badge-label{
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  color:#94a3b8;
+  font-weight:700;
+}
+
+.badge-value{
+  font-size:18px;
+  font-weight:900;
+}
+
+.score .badge-value{color:#10b981}
+.life .badge-value{color:#facc15}
+.best .badge-value{color:#60a5fa}
+
+.area{
+  position:absolute;
+  inset:66px 0 0 0;
+  background:
+    linear-gradient(#1f2937 1px,transparent 1px),
+    linear-gradient(90deg,#1f2937 1px,transparent 1px);
+  background-size:48px 48px;
+}
+
+.player{
+  position:absolute;
+  bottom:24px;
+  left:50%;
+  width:116px;
+  height:58px;
+  border-radius:12px 12px 18px 18px;
+  background:#10b981;
+  border:3px solid #6ee7b7;
+  z-index:4;
+}
+
+.player::before{
+  content:"";
+  position:absolute;
+  top:-24px;
+  left:28px;
+  width:56px;
+  height:30px;
+  border:5px solid #6ee7b7;
+  border-bottom:none;
+  border-radius:40px 40px 0 0;
+}
+
+.drop{
+  position:absolute;
+  top:-55px;
+  width:42px;
+  height:42px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:32px;
+  z-index:3;
+}
+
+.game-screen{
+  position:absolute;
+  inset:66px 0 0 0;
+  z-index:20;
+  background:rgba(15,23,42,.94);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  padding:24px;
+}
+
+.game-screen h2{
+  font-size:42px;
+  margin-bottom:12px;
+}
+
+.game-screen p{
+  max-width:520px;
+  color:#cbd5e1;
+  line-height:1.6;
+  margin-bottom:24px;
+}
+
+.game-action{
+  padding:12px 28px;
+  border:none;
+  border-radius:10px;
+  background:#10b981;
+  color:#052e1c;
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.hidden{display:none}
+
+@keyframes spin{100%{transform:rotate(360deg)}}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@media(max-width:600px){
+  h1{font-size:2.1rem}
+  p{font-size:1rem}
+
+  .play-btn{
+    right:50%;
+    transform:translateX(50%);
+    bottom:70px;
+  }
+
+  .game-wrap{
+    width:100vw;
+    height:100vh;
+    border-radius:0;
+  }
+
+  .game-top{
+    height:96px;
+    flex-direction:column;
+    justify-content:center;
+    gap:8px;
+  }
+
+  .area,.game-screen{
+    inset:96px 0 0 0;
+  }
+
+  .stats{
+    width:100%;
+    justify-content:center;
+    gap:7px;
+  }
+
+  .badge{
+    min-width:30%;
+    padding:7px 5px;
+  }
+
+  .player{
+    width:100px;
+    height:52px;
+  }
+
+  .player::before{
+    left:24px;
+    width:48px;
+  }
+}
 </style>
 </head>
 
 <body>
 
 <div class="container">
-    <h1>🚧 Website Under Construction</h1>
-    <p>We're working hard to launch something amazing.<br>Stay tuned!</p>
-    <div class="loader"></div>
+  <h1>🚧 Website Under Construction</h1>
+  <p>We're working hard to launch something amazing.<br>Stay tuned!</p>
+  <div class="loader"></div>
 </div>
 
+<button class="play-btn" onclick="openGame()">Play while you wait</button>
+
 <div class="footer">
-    © 2026 Parchess. All Rights Reserved.
+  © 2026 Parchess. All Rights Reserved.
 </div>
+
+<div class="game-modal" id="gameModal">
+  <div class="game-wrap" id="game">
+    <button class="close-btn" onclick="closeGame()">×</button>
+
+    <div class="game-top">
+      <div class="game-title">Safe Drop</div>
+
+      <div class="stats">
+        <div class="badge score">
+          <div class="badge-label">Score</div>
+          <div class="badge-value" id="score">0</div>
+        </div>
+
+        <div class="badge life">
+          <div class="badge-label">Lives</div>
+          <div class="badge-value" id="lives">5</div>
+        </div>
+
+        <div class="badge best">
+          <div class="badge-label">Best</div>
+          <div class="badge-value" id="best">0</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="area"></div>
+    <div class="player" id="player"></div>
+
+    <div class="game-screen" id="startBox">
+      <h2>Safe Drop</h2>
+      <p>Catch the bags. Avoid the bombs. Missing bags also reduces lives.</p>
+      <button class="game-action" onclick="startGame()">Start Game</button>
+    </div>
+
+    <div class="game-screen hidden" id="gameOverBox">
+      <h2>Game Over</h2>
+      <p>Your Score: <b id="finalScore">0</b></p>
+      <button class="game-action" onclick="startGame()">Restart</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const modal=document.getElementById("gameModal");
+const game=document.getElementById("game");
+const player=document.getElementById("player");
+const scoreEl=document.getElementById("score");
+const livesEl=document.getElementById("lives");
+const bestEl=document.getElementById("best");
+const startBox=document.getElementById("startBox");
+const gameOverBox=document.getElementById("gameOverBox");
+const finalScore=document.getElementById("finalScore");
+
+let score=0,lives=5,running=false,playerX=0,keys={},spawnTimer=null,loop=null;
+let best=Number(localStorage.getItem("safeDropBest"))||0;
+bestEl.textContent=best;
+
+function openGame(){
+  modal.style.display="flex";
+  resetGame();
+}
+
+function closeGame(){
+  resetGame();
+  modal.style.display="none";
+  startBox.classList.remove("hidden");
+}
+
+function setPlayer(){
+  playerX=game.clientWidth/2-player.clientWidth/2;
+  player.style.left=playerX+"px";
+}
+
+function resetGame(){
+  running=false;
+  clearInterval(spawnTimer);
+  clearInterval(loop);
+  document.querySelectorAll(".drop").forEach(item=>item.remove());
+  score=0;
+  lives=5;
+  scoreEl.textContent=score;
+  livesEl.textContent=lives;
+  finalScore.textContent=0;
+  setPlayer();
+}
+
+function startGame(){
+  resetGame();
+  startBox.classList.add("hidden");
+  gameOverBox.classList.add("hidden");
+  running=true;
+  spawnTimer=setInterval(spawnDrop,760);
+  loop=setInterval(update,16);
+}
+
+function spawnDrop(){
+  if(!running)return;
+
+  const item=document.createElement("div");
+  const bomb=Math.random()<0.18;
+
+  item.className="drop";
+  item.textContent=bomb?"💣":"💼";
+  item.dataset.bomb=bomb?"true":"false";
+  item.style.left=Math.random()*(game.clientWidth-50)+"px";
+  item.style.top="-55px";
+
+  game.appendChild(item);
+}
+
+function update(){
+  if(!running)return;
+
+  const speed=game.clientWidth<600?7:8;
+
+  if(keys["ArrowLeft"]||keys["a"])playerX-=speed;
+  if(keys["ArrowRight"]||keys["d"])playerX+=speed;
+
+  playerX=Math.max(0,Math.min(game.clientWidth-player.clientWidth,playerX));
+  player.style.left=playerX+"px";
+
+  document.querySelectorAll(".drop").forEach(item=>{
+    let y=parseFloat(item.style.top);
+    y+=3.4+score*.008;
+    item.style.top=y+"px";
+
+    const p=player.getBoundingClientRect();
+    const d=item.getBoundingClientRect();
+
+    const hit=p.left<d.right&&p.right>d.left&&p.top<d.bottom&&p.bottom>d.top;
+
+    if(hit){
+      if(item.dataset.bomb==="true"){
+        lives--;
+        livesEl.textContent=lives;
+        item.remove();
+        if(lives<=0)endGame();
+      }else{
+        score+=10;
+        scoreEl.textContent=score;
+        item.remove();
+      }
+    }
+
+    if(y>game.clientHeight){
+      if(item.dataset.bomb==="false"){
+        lives--;
+        livesEl.textContent=lives;
+        if(lives<=0){
+          item.remove();
+          endGame();
+          return;
+        }
+      }
+      item.remove();
+    }
+  });
+}
+
+function endGame(){
+  running=false;
+  clearInterval(spawnTimer);
+  clearInterval(loop);
+
+  if(score>best){
+    best=score;
+    localStorage.setItem("safeDropBest",best);
+    bestEl.textContent=best;
+  }
+
+  finalScore.textContent=score;
+  gameOverBox.classList.remove("hidden");
+}
+
+document.addEventListener("keydown",e=>keys[e.key]=true);
+document.addEventListener("keyup",e=>keys[e.key]=false);
+
+game.addEventListener("mousemove",e=>{
+  if(!running)return;
+  const r=game.getBoundingClientRect();
+  playerX=e.clientX-r.left-player.clientWidth/2;
+});
+
+game.addEventListener("touchmove",e=>{
+  if(!running)return;
+  const r=game.getBoundingClientRect();
+  playerX=e.touches[0].clientX-r.left-player.clientWidth/2;
+},{passive:true});
+
+window.addEventListener("resize",setPlayer);
+</script>
 
 </body>
 </html>
