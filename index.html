@@ -251,6 +251,20 @@ p{
 
 .hidden{display:none}
 
+.credit{
+  position:fixed;
+  bottom:8px;
+  left:0;
+  right:0;
+  text-align:center;
+  font-size:10px;
+  opacity:0.5;
+  color:white;
+  z-index:200;
+  pointer-events:none;
+  letter-spacing:0.5px;
+}
+
 @keyframes spin{100%{transform:rotate(360deg)}}
 
 @keyframes fadeIn{
@@ -323,6 +337,11 @@ p{
     left:24px;
     width:48px;
   }
+
+  .credit{
+    font-size:8px;
+    bottom:5px;
+  }
 }
 </style>
 </head>
@@ -384,6 +403,8 @@ p{
     </div>
   </div>
 </div>
+
+<div class="credit">made by Param Jyoti Gogoi</div>
 
 <script>
 const modal=document.getElementById("gameModal");
